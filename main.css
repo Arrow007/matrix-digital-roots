@@ -19,8 +19,7 @@ h2 {
     font-style: italic;
 }
 
-.settings,
-.matrices {
+.card {
     box-sizing: border-box;
     width: calc(50% - 1em);
     background-color: #fafafa;
@@ -76,7 +75,7 @@ input:focus {
     border-bottom: 2px solid #ef4444;
 }
 
-@media (max-width: 1300px) {
+@media (max-width: 1600px) {
 
     .settings {
         width: 100%;
@@ -116,4 +115,8 @@ th {
 
 .highlight {
     color: #6200ee;
+}
+
+.space {
+    margin-bottom: 1em;
 }

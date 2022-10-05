@@ -12,8 +12,6 @@ const drFormTables = document.querySelectorAll('.drmatrix');
 parametersForm.addEventListener('submit', (event) => {
     event.preventDefault();
 
-    // outputTable.innerHTML = '';
-
     let dimension = parseInt(dimensionInput.value);
     let initial = parseInt(initialInput.value);
 
