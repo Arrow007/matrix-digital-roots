@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matrix Digital Roots</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="reset.css">
+    <link rel="stylesheet" href="main.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.2.1/math.js"
+        integrity="sha512-47N5yVdAeXJ+9qstVMTH2Z0EpX618sjYZcswRwhpldSTD0IbW6yQPtzg4RLrPp/2+TIgEF1elT68/ZBu82nqJA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+
+<body>
+    <h1>Matrix Digital Roots</h1>
+
+    <section class="settings">
+        <h2>Parameters</h2>
+
+        <form action="" id="parameters">
+            <div>
+                <input type="number" name="dimension" id="dimension" placeholder="Dimension" min="2" required>
+                <input type="number" name="initial" id="initial" placeholder="Initial" required>
+            </div>
+
+            <button type="submit" id="calculate">Calculate</button>
+        </form>
+
+        <p>Each calculation will loop 9 times.</p>
+    </section>
+
+    <section class="output">
+        <div class="matrices">
+            <h2>Original Form</h2>
+        </div>
+        <div class="matrices">
+            <h2 class="highlight">Digital Root Form</h2>
+        </div>
+    </section>
+
+    <section class="output">
+        <div class="matrices">
+
+            <table>
+                <tbody class="matrix">
+                </tbody>
+            </table>
+
+            <table>
+                <tbody class="properties">
+                    <tr>
+                        <th>Determinant</th>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th>Row Sums</th>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th>Column Sums</th>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+        <div class="matrices">
+
+            <table>
+                <tbody class="drmatrix">
+                </tbody>
+            </table>
+
+            <table>
+                <tbody class="properties">
+                    <tr>
+                        <th>Determinant</th>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th>Row Sums</th>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th>Column Sums</th>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
