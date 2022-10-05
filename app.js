@@ -17,7 +17,7 @@ parametersForm.addEventListener('submit', (event) => {
 
     try {
         clear();
-        calc(dimension, initial);
+        loopCalc(dimension, initial);
 
         dimensionInput.classList.toggle('success');
         initialInput.classList.toggle('success');
@@ -60,7 +60,7 @@ function dr(n, base = 10) {
 
 // Uhh pretty much everything function
 function calc(dimension, initial) {
-    let matrix = Array.from(Array(dimension), () => new Array(dimension));
+    const matrix = Array.from(Array(dimension), () => new Array(dimension));
     let iterator = initial;
 
     for (let i = 0; i < dimension; i++) {
@@ -70,34 +70,46 @@ function calc(dimension, initial) {
         }
     }
 
-    let drMatrix = Array.from(Array(dimension), () => new Array(dimension));
+    const drMatrix = Array.from(Array(dimension), () => new Array(dimension));
     for (let i = 0; i < dimension; i++) {
         for (let j = 0; j < dimension; j++) {
             drMatrix[i][j] = dr(matrix[i][j]);
         }
     }
 
-    for (let originalFormTable of originalFormTables) {
+    return { matrix, drMatrix }
+}
+
+function loopCalc(dimension, initial) {
+    let iterator = initial;
+
+    for (let table of originalFormTables) {
         for (let i = 0; i < dimension; i++) {
             let tr = document.createElement('tr')
-            originalFormTable.append(tr)
+            table.append(tr)
+
             for (let j = 0; j < dimension; j++) {
                 let td = document.createElement('td')
-                td.innerText = matrix[i][j]
+                td.innerText = calc(dimension, iterator).matrix[i][j]
                 tr.append(td);
             }
         }
+        iterator++;
     }
 
-    for (let drFormTable of drFormTables) {
+    iterator = initial;
+
+    for (let table of drFormTables) {
         for (let i = 0; i < dimension; i++) {
             let tr = document.createElement('tr')
-            drFormTable.append(tr)
+            table.append(tr)
+
             for (let j = 0; j < dimension; j++) {
                 let td = document.createElement('td')
-                td.innerText = drMatrix[i][j]
+                td.innerText = calc(dimension, iterator).drMatrix[i][j]
                 tr.append(td);
             }
         }
+        iterator++;
     }
 }
