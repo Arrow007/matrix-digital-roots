@@ -105,12 +105,18 @@ function loopCalc(dimension, initial) {
     let iterator = initial;
 
     for (let determinant of determinants) {
-        determinant.innerText = math.det(calc(dimension, initial).matrix);
+        determinant.innerText = math.det(calc(dimension, iterator).matrix);
+        iterator++;
     }
 
+    iterator = initial
+
     for (let determinant of drDeterminants) {
-        determinant.innerText = math.det(calc(dimension, initial).drMatrix);
+        determinant.innerText = math.det(calc(dimension, iterator).drMatrix);
+        iterator++;
     }
+
+    iterator = initial
 
     for (let sum = 0; sum < rowSums.length; sum++) {
         const rowSumArray = [];
