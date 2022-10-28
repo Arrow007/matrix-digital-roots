@@ -3,6 +3,7 @@ const parametersForm = document.querySelector('#parameters')
 // Form Inputs
 const dimensionInput = document.querySelector('#dimension');
 const initialInput = document.querySelector('#initial');
+const baseInput = document.querySelector('#base');
 const calculateBtn = document.querySelector('#calculate');
 
 // Output Tables
@@ -18,23 +19,32 @@ const colSums = document.querySelectorAll('.colSums');
 const drDeterminants = document.querySelectorAll('.drDeterminant');
 const drRowSums = document.querySelectorAll('.drRowSums');
 const drColSums = document.querySelectorAll('.drColSums');
+const drTraces = document.querySelectorAll('.drTrace');
 
 parametersForm.addEventListener('submit', (event) => {
     event.preventDefault();
 
     let dimension = parseInt(dimensionInput.value);
     let initial = parseInt(initialInput.value);
+    let base = parseInt(baseInput.value);
+
+    if (base === NaN) {
+        base = 10;
+    }
 
     try {
         clear();
-        loopCalc(dimension, initial);
+        loopCalc(dimension, initial, base);
 
         dimensionInput.classList.toggle('success');
         initialInput.classList.toggle('success');
+        baseInput.classList.toggle('success');
 
         setTimeout(() => {
             dimensionInput.classList.toggle('success');
             initialInput.classList.toggle('success');
+            baseInput.classList.toggle('success');
+
         }, 2000);
     }
     catch (error) {
@@ -42,10 +52,12 @@ parametersForm.addEventListener('submit', (event) => {
 
         dimensionInput.classList.toggle('error');
         initialInput.classList.toggle('error');
+        baseInput.classList.toggle('error');
 
         setTimeout(() => {
             dimensionInput.classList.toggle('error');
             initialInput.classList.toggle('error');
+            baseInput.classList.toggle('error');
         }, 2000);
     }
 })
@@ -67,6 +79,9 @@ function clear() {
 
         colSums[i].innerText = '';
         drColSums[i].innerText = '';
+
+        drTraces[i].innerText = '';
+        drTraces[i].classList.remove('successText')
     }
 }
 
@@ -79,7 +94,7 @@ function dr(n, base = 10) {
 }
 
 // Calculate Matrices Function
-function calc(dimension, initial) {
+function calc(dimension, initial, base) {
     const matrix = Array.from(Array(dimension), () => new Array(dimension));
     let iterator = initial;
 
@@ -93,7 +108,7 @@ function calc(dimension, initial) {
     const drMatrix = Array.from(Array(dimension), () => new Array(dimension));
     for (let i = 0; i < dimension; i++) {
         for (let j = 0; j < dimension; j++) {
-            drMatrix[i][j] = dr(matrix[i][j]);
+            drMatrix[i][j] = dr(matrix[i][j], base);
         }
     }
 
@@ -101,7 +116,7 @@ function calc(dimension, initial) {
 }
 
 // Fill Values Function
-function loopCalc(dimension, initial) {
+function loopCalc(dimension, initial, base) {
     let iterator = initial;
 
     for (let determinant of determinants) {
@@ -109,14 +124,24 @@ function loopCalc(dimension, initial) {
         iterator++;
     }
 
-    iterator = initial
+    iterator = initial;
 
     for (let determinant of drDeterminants) {
         determinant.innerText = math.det(calc(dimension, iterator).drMatrix);
         iterator++;
     }
 
-    iterator = initial
+    iterator = initial;
+
+    for (let trace of drTraces) {
+        trace.innerText = math.trace(calc(dimension, iterator).drMatrix);
+
+        if (dr(math.trace(calc(dimension, iterator, base).drMatrix)) === dr(3 * (iterator + 1)), base) {
+            trace.classList.toggle('successText');
+        }
+    }
+
+    iterator = initial;
 
     for (let sum = 0; sum < rowSums.length; sum++) {
         const rowSumArray = [];
@@ -127,8 +152,8 @@ function loopCalc(dimension, initial) {
             let colTotal = 0;
 
             for (let j = 0; j < dimension; j++) {
-                rowTotal += calc(dimension, iterator).matrix[i][j];
-                colTotal += calc(dimension, iterator).matrix[j][i];
+                rowTotal += calc(dimension, iterator, base).matrix[i][j];
+                colTotal += calc(dimension, iterator, base).matrix[j][i];
             }
 
             rowSumArray.push(rowTotal);
@@ -151,8 +176,8 @@ function loopCalc(dimension, initial) {
             let colTotal = 0;
 
             for (let j = 0; j < dimension; j++) {
-                rowTotal += calc(dimension, iterator).drMatrix[i][j];
-                colTotal += calc(dimension, iterator).drMatrix[j][i];
+                rowTotal += calc(dimension, iterator, base).drMatrix[i][j];
+                colTotal += calc(dimension, iterator, base).drMatrix[j][i];
             }
 
             rowSumArray.push(rowTotal);
@@ -173,7 +198,7 @@ function loopCalc(dimension, initial) {
 
             for (let j = 0; j < dimension; j++) {
                 let td = document.createElement('td')
-                td.innerText = calc(dimension, iterator).matrix[i][j]
+                td.innerText = calc(dimension, iterator, base).matrix[i][j]
                 tr.append(td);
             }
         }
@@ -189,7 +214,7 @@ function loopCalc(dimension, initial) {
 
             for (let j = 0; j < dimension; j++) {
                 let td = document.createElement('td')
-                td.innerText = calc(dimension, iterator).drMatrix[i][j]
+                td.innerText = calc(dimension, iterator, base).drMatrix[i][j]
                 tr.append(td);
             }
         }
