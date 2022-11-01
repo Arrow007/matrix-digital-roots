@@ -14,12 +14,14 @@ const drFormTables = document.querySelectorAll('.drmatrix');
 const determinants = document.querySelectorAll('.determinant');
 const rowSums = document.querySelectorAll('.rowSums');
 const colSums = document.querySelectorAll('.colSums');
+const traces = document.querySelectorAll('.trace');
 
 // DR Properties
 const drDeterminants = document.querySelectorAll('.drDeterminant');
 const drRowSums = document.querySelectorAll('.drRowSums');
 const drColSums = document.querySelectorAll('.drColSums');
 const drTraces = document.querySelectorAll('.drTrace');
+const drdrTraces = document.querySelectorAll('.drdrTraces');
 
 parametersForm.addEventListener('submit', (event) => {
     event.preventDefault();
@@ -81,7 +83,7 @@ function clear() {
         drColSums[i].innerText = '';
 
         drTraces[i].innerText = '';
-        drTraces[i].classList.remove('successText')
+        drTraces[i].classList.remove('successText');
     }
 }
 
@@ -134,12 +136,27 @@ function loopCalc(dimension, initial, base) {
     iterator = initial;
 
     for (let trace of drTraces) {
-        trace.innerText = math.trace(calc(dimension, iterator).drMatrix);
+        trace.innerText = math.trace(calc(dimension, iterator, base).drMatrix);
+        iterator++;
 
-        if (dr(math.trace(calc(dimension, iterator, base).drMatrix)) === dr(3 * (iterator + 1)), base) {
-            trace.classList.toggle('successText');
-        }
+        // if (dr(math.trace(calc(dimension, iterator, base).drMatrix)) === dr(3 * (iterator + 1)), base) {
+        //     trace.classList.toggle('successText');
+        // }
     }
+
+    iterator = initial;
+
+    // for (let trace of drdrTraces) {
+    //     trace.innerText = dr(math.trace(calc(dimension, iterator, base).drMatrix));
+    //     iterator++;
+    // }
+
+    // iterator = initial;
+
+    // for (let trace of traces) {
+    //     trace.innerText = dr(math.trace(calc(dimension, iterator, base).matrix));
+    //     iterator++;
+    // }
 
     iterator = initial;
 
